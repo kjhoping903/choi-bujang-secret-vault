@@ -35,6 +35,18 @@
     li strong { display: block; font-size: 18px; margin-bottom: 5px; color: #ffffff; }
     li span { color: #bfd0e5; display: block; margin-bottom: 10px; white-space: pre-wrap; }
     .actions { display: flex; gap: 8px; }
+    .study-search { margin: 24px 0 12px; }
+    .study-search input { width: 100%; padding: 12px 14px; border: 1px solid #51667c; border-radius: 10px; background: #101a28; color: #ecf4ff; box-sizing: border-box; font-size: 16px; }
+    .study-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px; margin: 16px 0 32px; }
+    .study-card { margin: 0; padding: 0; overflow: hidden; }
+    .study-toggle { display: flex; width: 100%; min-height: 100%; flex-direction: column; align-items: flex-start; gap: 8px; padding: 18px; border: 0; border-radius: 0; background: transparent; color: inherit; text-align: left; margin: 0; }
+    .study-toggle:hover { background: #223850; }
+    .study-date { color: #8ad8df; font-size: 14px; font-weight: 700; }
+    .study-topic { font-size: 18px; font-weight: 700; }
+    .study-meta { color: #bfd0e5; font-size: 14px; }
+    .study-detail { padding: 0 18px 18px; }
+    .study-detail p { margin: 8px 0 0; font-size: 15px; }
+    .study-detail[hidden], .study-card[hidden] { display: none; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -43,6 +55,49 @@
     <div class="eyebrow">BYTE BACK · 3단계 자료실 보호</div>
     <h1>점령된 자료실</h1>
     <p>보호된 가상 메모 자료실입니다. 로그인한 사용자만 본인의 메모를 조회·추가·수정·삭제할 수 있습니다.</p>
+
+    <!-- 공개 학습 기록 검색 및 카드 -->
+    <section aria-labelledby="study-heading">
+      <h2 id="study-heading">학습 기록</h2>
+      <p>날짜, 주제, 우선순위로 검색하고 카드를 눌러 회고를 확인할 수 있습니다.</p>
+      <div class="study-search">
+        <label for="study-search">학습 기록 검색</label>
+        <input type="search" id="study-search" placeholder="예: DOM, 높음, 2026-10-17" autocomplete="off">
+      </div>
+      <div id="study-grid" class="study-grid">
+        <article class="card study-card" data-search="2026-10-15 html css 레이아웃 복습 높음 flexbox grid 반응형 공책 수기 이해도">
+          <button class="study-toggle" type="button" aria-expanded="false">
+            <span class="study-date">2026-10-15</span><span class="study-topic">HTML 및 CSS 레이아웃 복습</span><span class="study-meta">우선순위 높음 · 예상 60분</span>
+          </button>
+          <div class="study-detail" hidden><p><strong>성공 기준</strong> Flexbox와 Grid를 활용한 반응형 레이아웃 구조 설계 검증 완료.</p><p><strong>회고</strong> 공책에 수기로 작성하여 이해도를 높임.</p></div>
+        </article>
+        <article class="card study-card" data-search="2026-10-16 외부 리소스 연동 미디어 보통 이미지 삽입 경로 alt AI 오류">
+          <button class="study-toggle" type="button" aria-expanded="false">
+            <span class="study-date">2026-10-16</span><span class="study-topic">외부 리소스 연동 및 미디어 다루기</span><span class="study-meta">우선순위 보통 · 예상 60분</span>
+          </button>
+          <div class="study-detail" hidden><p><strong>성공 기준</strong> 이미지 및 미디어 삽입 시 올바른 경로 설정 및 alt 속성 작성 확인.</p><p><strong>회고</strong> AI를 적극 활용해 경로 설정 오류를 빠르게 해결함.</p></div>
+        </article>
+        <article class="card study-card" data-search="2026-10-17 자바스크립트 javascript dom 조작 실습 높음 querySelector createElement 동적 요소 이벤트 버블링 리팩토링">
+          <button class="study-toggle" type="button" aria-expanded="false">
+            <span class="study-date">2026-10-17</span><span class="study-topic">자바스크립트 DOM 조작 실습</span><span class="study-meta">우선순위 높음 · 예상 90분</span>
+          </button>
+          <div class="study-detail" hidden><p><strong>성공 기준</strong> querySelector와 createElement를 이용한 동적 요소 생성.</p><p><strong>회고</strong> 이벤트 버블링 현상을 이해하고 리팩토링함.</p></div>
+        </article>
+        <article class="card study-card" data-search="2026-10-18 자바스크립트 javascript form 유효성 검증 보통 정규식 필수 입력 이메일 예외 케이스">
+          <button class="study-toggle" type="button" aria-expanded="false">
+            <span class="study-date">2026-10-18</span><span class="study-topic">자바스크립트 Form 유효성 검증</span><span class="study-meta">우선순위 보통 · 예상 80분</span>
+          </button>
+          <div class="study-detail" hidden><p><strong>성공 기준</strong> 정규식을 활용한 필수 입력 항목 및 이메일 형식 검증 로직 구현.</p><p><strong>회고</strong> 예외 케이스를 성공적으로 방어함.</p></div>
+        </article>
+        <article class="card study-card" data-search="2026-10-19 비동기 통신 fetch api 연동 높음 async await 외부 데이터 에러 처리 가독성">
+          <button class="study-toggle" type="button" aria-expanded="false">
+            <span class="study-date">2026-10-19</span><span class="study-topic">비동기 통신(Fetch API) 연동</span><span class="study-meta">우선순위 높음 · 예상 90분</span>
+          </button>
+          <div class="study-detail" hidden><p><strong>성공 기준</strong> async/await 문법을 활용한 외부 데이터 비동기 조회 및 에러 처리.</p><p><strong>회고</strong> 가독성을 높인 코드로 개선함.</p></div>
+        </article>
+      </div>
+      <p id="study-empty" role="status" hidden>검색 결과가 없습니다.</p>
+    </section>
 
     <!-- 1. 인증 영역 -->
     <div id="auth-section" class="card">
@@ -104,6 +159,33 @@
     const authError = document.getElementById('auth-error');
     const notesSection = document.getElementById('notes-section');
     const notesList = document.getElementById('notes-list');
+    const studySearch = document.getElementById('study-search');
+    const studyCards = [...document.querySelectorAll('.study-card')];
+    const studyEmpty = document.getElementById('study-empty');
+
+    studySearch.addEventListener('input', () => {
+      const query = studySearch.value.trim().toLocaleLowerCase('ko');
+      let visibleCount = 0;
+      studyCards.forEach(card => {
+        const matches = card.dataset.search.toLocaleLowerCase('ko').includes(query);
+        card.hidden = !matches;
+        if (!matches) {
+          const toggle = card.querySelector('.study-toggle');
+          toggle.setAttribute('aria-expanded', 'false');
+          card.querySelector('.study-detail').hidden = true;
+        }
+        if (matches) visibleCount += 1;
+      });
+      studyEmpty.hidden = visibleCount !== 0;
+    });
+
+    document.querySelectorAll('.study-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        toggle.nextElementSibling.hidden = expanded;
+      });
+    });
 
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
